@@ -1,8 +1,22 @@
-import Image from "next/image";
+'use client'
+import { Provider } from 'react-redux';
+import Store from '@/redux/store/store';
+import PersonalInformation from "@/components/employees/addemp/personalInformation/page";
 
-export default function Home() {
+
+{/* <main className="flex min-h-screen flex-col items-center justify-between p-24">
+</main> */}
+function page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      main page    </main>
+    <Provider store={Store}>
+<PersonalInformation />
+    </Provider>
   );
 }
+
+export default page;
+
+
+
+
+    
