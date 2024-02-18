@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef } from "react";
-import { Button, Form, Input, Row, Col, Select, Radio } from "antd";
+import { Button, Form, Input, Row, Col, Select, Radio, DatePicker,Option} from "antd";
 const PersonalInformation = () => {
   
   const [image, setImage] = useState(null);
@@ -280,7 +280,7 @@ const PersonalInformation = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input you Address line 1!",
+                  message: "Please input your Qualification!",
                 },
               ]}
             >
@@ -294,11 +294,11 @@ const PersonalInformation = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your Address line 2!",
+                  message: "Please input your Date of Birth!",
                 },
               ]}
             >
-              <Input className="rounded-none"/>
+              <DatePicker className="rounded-none"/>
             </Form.Item>
           </Col>
         </Row>
@@ -379,7 +379,7 @@ const PersonalInformation = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Please input your Zip code!",
               },
             ]}
           >
