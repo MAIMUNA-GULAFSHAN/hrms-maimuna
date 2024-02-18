@@ -1,12 +1,10 @@
-// any slice
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    formData: {}, // Define your initial state here
-  };
-export const formDataSlice = createSlice({
-  name: "formData",
-  initialState,
+export const formSlice = createSlice({
+  name: "form",
+  initialState: {
+    formData: {},
+  },
   reducers: {
     setFormData: (state, action) => {
       state.formData = action.payload;
@@ -14,6 +12,8 @@ export const formDataSlice = createSlice({
   },
 });
 
-export const { setFormData } = formDataSlice.actions;
+export const { setFormData } = formSlice.actions;
 
-export default formDataSlice.reducer;
+export const selectFormData = (state) => state.form.formData;
+
+export default formSlice.reducer;

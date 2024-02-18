@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import formDataSlice from "../slices/slice";
+import formReducer from "../slices/slice"; // Update the import path
 
-const Store = configureStore({
-  reducer: formDataSlice,
+const store = configureStore({
+  reducer: {
+    form: formReducer
+  },
 });
 
-export default Store;
+export default store;

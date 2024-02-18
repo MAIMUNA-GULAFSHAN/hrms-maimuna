@@ -1,32 +1,7 @@
 "use client"
-import React, { useState, useRef, useEffect } from "react";
-import { Button, Form, Input, Row, Col, Select,Radio } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { setFormData } from "@/redux/slices/slice";
-
-const { Option } = Select;
-
+import { useState, useRef } from "react";
+import { Button, Form, Input, Row, Col, Select, Radio } from "antd";
 const PersonalInformation = () => {
-  const dispatch = useDispatch();
-  const [form] = Form.useForm();
-  const formData = useSelector((state) => state.formData.formData) || {};
-
-  useEffect(() => {
-    if (formData) {
-      form.setFieldsValue(formData);
-    }
-  }, [formData, form]);
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    dispatch(setFormData(values));
-    localStorage.setItem("formData", JSON.stringify(values));
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   
   const [image, setImage] = useState(null);
   const hiddenFileInput = useRef(null);
@@ -78,6 +53,17 @@ const PersonalInformation = () => {
       };
     };
   };
+  const onFinish = (values) => {
+    // Save form data to local storage
+    localStorage.setItem("personalInformation", JSON.stringify(values));
+    // Redirect or perform any other necessary action after form submission
+    // For example, you can redirect to another page:
+    history.push("/review");
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
     <div style={{ display: "flex", justifyContent:"center", alignItems:"center" ,gap:"100px"}}>
@@ -127,12 +113,10 @@ const PersonalInformation = () => {
         wrapperCol={{
           span: 18,
         }}
-        style={{
-          maxWidth: 900,
-        }}
         initialValues={{
           remember: true,
         }}
+        className="w-[55%]"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
@@ -150,7 +134,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -164,7 +148,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
         </Row>
@@ -183,7 +167,7 @@ const PersonalInformation = () => {
               },
             ]}
           >
-            <Input />
+            <Input className="rounded-none"/>
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -197,7 +181,7 @@ const PersonalInformation = () => {
               },
             ]}
           >
-            <Input />
+            <Input className="rounded-none"/>
           </Form.Item>
         </Col>
 
@@ -214,15 +198,15 @@ const PersonalInformation = () => {
         },
       ]}
     >
-      <Input />
+      <Input className="rounded-none"/>
     </Form.Item>
   </Col>
   <Col span={7}>
     <Form.Item label="Gender" name="Gender" style={{ marginBottom: 0 }}>
       <Radio.Group style={{ display: 'flex', flexDirection: 'row' }}>
-        <Radio.Button value="small">Male</Radio.Button>
-        <Radio.Button value="default">Female</Radio.Button>
-        <Radio.Button value="large">Other</Radio.Button>
+        <Radio.Button value="Male">Male</Radio.Button>
+        <Radio.Button value="Female">Female</Radio.Button>
+        <Radio.Button value="Other">Other</Radio.Button>
       </Radio.Group>
     </Form.Item>
   </Col>
@@ -239,7 +223,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input  className="rounded-none"/>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -254,7 +238,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
         </Row>
@@ -270,7 +254,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -284,7 +268,37 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input className="rounded-none"/>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={0}>
+          <Col span={12}>
+            <Form.Item
+              label="Qualification"
+              name="Qualification"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input you Address line 1!",
+                },
+              ]}
+            >
+              <Input className="rounded-none"/>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              label="Date of Birth"
+              name="RangePicker"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Address line 2!",
+                },
+              ]}
+            >
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
         </Row>
@@ -300,7 +314,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input />
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -314,7 +328,7 @@ const PersonalInformation = () => {
                 },
               ]}
             >
-              <Input/>
+              <Input className="rounded-none"/>
             </Form.Item>
           </Col>
         </Row>
@@ -334,7 +348,7 @@ const PersonalInformation = () => {
                 <Option value="option1">Option 1</Option>
                 <Option value="option2">Option 2</Option>
                 <Option value="option3">Option 3</Option>
-              </Select>
+              </Select >
             </Form.Item>
           </Col>
 
@@ -364,13 +378,12 @@ const PersonalInformation = () => {
             name="Zip Code"
             rules={[
               {
-                pattern:/^\d{5}-\d{4}$/,
                 required: true,
                 message: "Please input your password!",
               },
             ]}
           >
-            <Input />
+            <Input className="rounded-none"/>
           </Form.Item>
         </Col>
 
@@ -379,9 +392,10 @@ const PersonalInformation = () => {
             offset: 2,
           }}
         >
-          <Button block type="primary" htmlType="submit">
+          <div className="w-full flex justify-center h-10 "> 
+          <Button className="bg-[#1890ff] w-[70%] text-white h-full rounded-none">
             Next
-          </Button>
+          </Button></div>
         </Form.Item>
       </Form>
     </div>
