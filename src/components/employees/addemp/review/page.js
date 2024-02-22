@@ -1,10 +1,12 @@
-// ReviewPage.js
 import React from "react";
 import {Form, Row, Col} from "antd";
+import {useSelector} from 'react-redux'
+import adduser from "@/redux/slices/slice";
 
 const ReviewPage = () => {
   // Retrieve form data from local storage
-  const formData = JSON.parse(localStorage.getItem("personalInformation"));
+  // const formData = JSON.parse(localStorage.getItem("personalInformation"));
+  const formData = useSelector(adduser);
 
   return (
     <div>
@@ -29,7 +31,8 @@ const ReviewPage = () => {
       name="Last Name"
       rules={[{message: "Please input your Last Name!" }]}
     >
-{formData["Last Name"]}    </Form.Item>
+{formData["Last Name"]}   
+ </Form.Item>
   </Col>
 </Row>
 

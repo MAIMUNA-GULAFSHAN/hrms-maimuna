@@ -2,11 +2,11 @@
 import React from 'react'
 import PersonalInformationreview from '@/components/employees/addemp/review/page'
 import {Provider} from "react-redux";
-import Store from '@/redux/store/store';
+import store from '@/redux/store/store';
 const Review1 = () => {
   return (
     <div>
-<Provider store={Store}>
+<Provider store={store}>
 <PersonalInformationreview />
     </Provider>    </div>
   )
