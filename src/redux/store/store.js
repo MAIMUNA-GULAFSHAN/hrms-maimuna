@@ -6,7 +6,7 @@ import personalDetails from "../slices/personalDetails";
 
 export const store = configureStore({
   reducer: {
-    professionalDetails: professionalDetails,
     personalDetails: personalDetails,
+    professionalDetails: professionalDetails,
   },
 });

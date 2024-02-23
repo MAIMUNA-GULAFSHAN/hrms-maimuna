@@ -1,44 +1,47 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import { Button, Form, Input, Row, Col, Select, Radio, DatePicker } from "antd";
-// import { useDispatch, useSelector } from "react-redux";
-// import personalDetails, {
-//   setpersonalDetails,
-// } from "@/redux/slices/personalDetails";
+"use client"
+import React, { useState, useRef } from "react";
+import { useDispatch,useSelector } from 'react-redux';
+import { addFormData,selectFormData } from "@/redux/slices/personalDetails";
+import {Provider} from "react-redux";
+import { store } from "@/redux/store/store";
+import { Form, Input, Row, Col, Select, Radio, DatePicker} from "antd";
+const { Option } = Select;
 import { useRouter } from "next/navigation";
 import axios from "@/api/axios";
 // import axios from "axios";
-const { Option } = Select;
+
 
 const PersonalInformation = () => {
   const router = useRouter();
-  // const dispatch = useDispatch();
-  // const [form] = Form.useForm();
-  // const Details = useSelector((state) => state.personalDetails) || {};
-
-  // useEffect(() => {
-  //   if (Details) {
-  //     form.setFieldsValue(personalDetails);
-  //   }
-  // }, [Details, form]);
-
+  // const formData = useSelector(selectFormData);
+  const dispatch = useDispatch();
+  
   const onFinish = (values) => {
     console.log("Success:", values);
     // dispatch(setpersonalDetails(values));
     // localStorage.setItem("formData", JSON.stringify(values));
   };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  const handleInputChange = (e, key) => {
+    const { value } = e.target;
+  
+    dispatch(addFormData({ ...formData, [key]: value }));
   };
 
+  const handleAddItemButtonClick = () => {
+    onNext(formData);
+  };
+  // const nextStore = (values) => {
+    //   console.log('success',values)
+  // };
+  
   const [image, setImage] = useState(null);
   const hiddenFileInput = useRef(null);
-
+  
   const handleImageChange = (event) => {};
-
+  
   const nextStore = async (values) => {
     // const myHeaders = new Headers();
+    dispatch(addFormData(values));
     // myHeaders.append("Content-Type", "application/json");
     // myHeaders.append("Accept", "application/json");
 
@@ -103,18 +106,45 @@ const PersonalInformation = () => {
   // });
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
-      {/* "Choose an image" section */}
+    <Provider store = {store}>
+    <div style={{ display: "flex",gap:"100px",width:"100%"}}>
       <div className="image-upload-container">
-        <div
-          style={{
-            border: "2px dashed gray ",
-            padding: "12px",
-            height: "20vh",
-            width: "8vw",
-          }}
-        >
-          <div style={{ cursor: "pointer" }}>
+        <div style={{border:"1px solid #A2A1A8",borderRadius:"6px", padding:"12px", height:"20vh", width:"8vw"}} >
+
+<div style={{ cursor: "pointer" }}>
+  <input
+    id="image-upload-input"
+    type="file"
+    onChange={handleImageChange}
+    ref={hiddenFileInput}
+    style={{ display: "none" }}
+  />
+  {image ? (
+    <img
+      src={URL.createObjectURL(image)}
+      alt="upload image"
+      className="img-display-after"
+      style={{ width: "100px", height: "116px" }}
+    />
+  ) : (
+    <div className="flex justify-center mt-7">
+        <label htmlFor="image-upload-input">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={60}
+        height={60}
+        style={{justifyContent: "center", width: "40px", height: "40px" ,cursor:"pointer"}}
+        viewBox="0 0 512 512"
+      >
+        <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
+      </svg>
+    </label>
+      </div>
+   
+  )}
+
+              </div>
+            
             <input
               id="image-upload-input"
               type="file"
@@ -122,45 +152,9 @@ const PersonalInformation = () => {
               ref={hiddenFileInput}
               style={{ display: "none" }}
             />
-            {image ? (
-              <img
-                src={URL.createObjectURL(image)}
-                alt="upload image"
-                className="img-display-after"
-                style={{ width: "100px", height: "116px" }}
-              />
-            ) : (
-              <div className="flex justify-center mt-7">
-                <label htmlFor="image-upload-input">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={60}
-                    height={60}
-                    style={{
-                      marginRight: "16px",
-                      justifyContent: "center",
-                      width: "40px",
-                      height: "40px",
-                      cursor: "pointer",
-                    }}
-                    viewBox="0 0 512 512"
-                  >
-                    <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
-                  </svg>
-                </label>
-              </div>
-            )}
           </div>
-
-          <input
-            id="image-upload-input"
-            type="file"
-            onChange={handleImageChange}
-            ref={hiddenFileInput}
-            style={{ display: "none" }}
-          />
         </div>
-      </div>
+      
 
       {/* Form */}
       <Form
@@ -176,7 +170,7 @@ const PersonalInformation = () => {
         //   span: 18,
         // }}
         labelAlign="left"
-        className="w-[55%] text-start "
+        className="w-[70%] text-start "
         autoComplete="off"
       >
         <Row gutter={20}>
@@ -265,7 +259,7 @@ const PersonalInformation = () => {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  marginLeft: "32px",
+                  marginLeft: "38px",
                 }}
               >
                 <Radio.Button value="Male">Male</Radio.Button>
@@ -489,12 +483,13 @@ const PersonalInformation = () => {
       >
         Next
       </Button> */}
-          <button className="bg-[#1890ff] w-[418px] text-white h-full rounded-none">
+          <button className="bg-[#1890ff] w-[418px] text-white h-full rounded-none" onClick={handleAddItemButtonClick}>
             Next
           </button>
         </div>
       </Form>
     </div>
+    </Provider>
   );
 };
 

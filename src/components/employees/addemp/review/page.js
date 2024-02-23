@@ -1,3 +1,4 @@
+"use client"
 import DocumentCard from "@/components/employeesOverview/DocumentCard";
 import EquipmentCard from "@/components/employeesOverview/EquipmentCard";
 import EquipmentDetails from "@/components/employeesOverview/EquipmentDetails";
@@ -8,8 +9,13 @@ import { RiEditFill } from "react-icons/ri";
 import Image from "next/image";
 import ProfImg from "@/../public/assets/empDetails/Avatar1.svg";
 import Invite from "./invite/Invite";
+import { store } from "@/redux/store/store";
+import {Provider} from "react-redux"
 const page = ({ tab, setTab }) => {
   return (
+
+    <Provider store={store}>
+    
     <div className="p-10 bg-gray-200">
       <div className="w-full mb-5 p-5 bg-white">
         <div className="flex justify-between w-full mb-4">
@@ -76,6 +82,7 @@ const page = ({ tab, setTab }) => {
         </div>
       </div>
     </div>
+    </Provider>
   );
 };
 
